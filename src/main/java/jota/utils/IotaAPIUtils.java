@@ -54,18 +54,23 @@ public class IotaAPIUtils {
         //
 
         else {
+
+            // TODO init with params
+            IotaAPIProxy proxy = new IotaAPIProxy.Builder().build();
+
             List<String> addresses = new ArrayList<>();
 
             for (int i = index; ; i++) {
                 String newAddress = newAddress(seed, i, checksum);
 
-                IotaAPIProxy proxy = new IotaAPIProxy.Builder().build();
-
                 FindTransactionResponse response = proxy.findTransactions(null, new String[]{newAddress}, null, null);
 
-                if (returnAll) {
+                // If returnAll, return list of allAddresses
+                // else return the last address that was generated
+                if (returnAll)
                     addresses.add(newAddress);
-                }
+                else
+                    allAddresses.get(allAddresses.size() - 1);
 
                 if (response.getHashes().length == 0)
                     break;
