@@ -18,14 +18,14 @@ public class Signing {
             }
         }
 
-        Curl curl = new Curl();
+        final Curl curl = new Curl();
         curl.reset();
         curl.absorb(seed, 0, seed.length);
         curl.squeeze(seed, 0, seed.length);
         curl.reset();
         curl.absorb(seed, 0, seed.length);
 
-        List<Integer> key = new ArrayList<>();
+        final List<Integer> key = new ArrayList<>();
         int[] buffer = new int[seed.length];
         int offset = 0;
 

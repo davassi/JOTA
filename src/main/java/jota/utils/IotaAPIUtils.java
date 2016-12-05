@@ -34,7 +34,7 @@ public class IotaAPIUtils {
 
     public static GetNewAddressResponse getNewAddress(final String seed, final int index, final boolean checksum, final int total, final boolean returnAll) {
 
-        List<String> allAddresses = new ArrayList<>();
+        final List<String> allAddresses = new ArrayList<>();
         // Case 1: total
         //
         // If total number of addresses to generate is supplied, simply generate
@@ -52,13 +52,10 @@ public class IotaAPIUtils {
         //  Continue calling findTransactions to see if address was already created
         //  if null, return list of addresses
         //
-
         else {
 
             // TODO init with params
             IotaAPIProxy proxy = new IotaAPIProxy.Builder().build();
-
-            List<String> addresses = new ArrayList<>();
 
             for (int i = index; ; i++) {
                 String newAddress = newAddress(seed, i, checksum);
@@ -66,17 +63,18 @@ public class IotaAPIUtils {
                 FindTransactionResponse response = proxy.findTransactions(null, new String[]{newAddress}, null, null);
 
                 // If returnAll, return list of allAddresses
-                // else return the last address that was generated
-                if (returnAll)
-                    addresses.add(newAddress);
-                else
-                    allAddresses.get(allAddresses.size() - 1);
-
-                if (response.getHashes().length == 0)
+                // else return only the last address that was generated
+                
+                if (!returnAll) {
+                	allAddresses.clear();
+                }
+                
+                allAddresses.add(newAddress);
+                
+                if (response.getHashes().length == 0) {
                     break;
+                }
             }
-
-            allAddresses = addresses;
         }
 
         return GetNewAddressResponse.create(allAddresses);
@@ -93,13 +91,17 @@ public class IotaAPIUtils {
     private static String newAddress(String seed, int index, boolean checksum) {
 
         final int[] key = Signing.key(Converter.trits(seed), index, 2);
+        log.debug("key Length = {}", key.length );
+        
         final int[] digests = Signing.digests(key);
+        log.debug("digests Length = {}", digests.length );
+        
         final int[] addressTrits = Signing.address(digests);
         String address = Converter.trytes(addressTrits);
 
-        if (checksum)
+        if (checksum) {
             address = Checksum.addChecksum(address);
-
+        }
         return address;
     }
 
@@ -107,3 +109,4 @@ public class IotaAPIUtils {
         throw new NotImplementedException("Not yet implemented");
     }
 }
+
