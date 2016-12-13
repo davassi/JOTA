@@ -28,7 +28,7 @@ public class IotaUnitConverter {
 
     private static String createAmountWithUnitDisplayText(double amountInUnit, IotaUnits unit) {
         String result = createAmountDisplayText(amountInUnit, unit);
-        result += " " + unit.toString();
+        result += " " + unit.getUnit();
         return result;
     }
 

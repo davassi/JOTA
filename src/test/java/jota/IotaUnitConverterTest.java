@@ -48,11 +48,11 @@ public class IotaUnitConverterTest {
 
     @Test
     public void shouldConvertRawIotaAmountToDisplayText() {
-        assertEquals(IotaUnitConverter.convertRawIotaAmountToDisplayText(1), "1 " + IotaUnits.IOTA);
-        assertEquals(IotaUnitConverter.convertRawIotaAmountToDisplayText(1000), "1 " + IotaUnits.KILO_IOTA);
-        assertEquals(IotaUnitConverter.convertRawIotaAmountToDisplayText(1000000), "1 " + IotaUnits.MEGA_IOTA);
-        assertEquals(IotaUnitConverter.convertRawIotaAmountToDisplayText(1000000000), "1 " + IotaUnits.GIGA_IOTA);
-        assertEquals(IotaUnitConverter.convertRawIotaAmountToDisplayText(1000000000000L), "1 " + IotaUnits.TERA_IOTA);
-        assertEquals(IotaUnitConverter.convertRawIotaAmountToDisplayText(1000000000000000L), "1 " + IotaUnits.PETA_IOTA);
+        assertEquals(IotaUnitConverter.convertRawIotaAmountToDisplayText(1), "1 i");
+        assertEquals(IotaUnitConverter.convertRawIotaAmountToDisplayText(1000), "1 Ki");
+        assertEquals(IotaUnitConverter.convertRawIotaAmountToDisplayText(1000000), "1 Mi"  );
+        assertEquals(IotaUnitConverter.convertRawIotaAmountToDisplayText(1000000000), "1 Gi" );
+        assertEquals(IotaUnitConverter.convertRawIotaAmountToDisplayText(1000000000000L), "1 Ti");
+        assertEquals(IotaUnitConverter.convertRawIotaAmountToDisplayText(1000000000000000L), "1 Pi");
     }
 }
