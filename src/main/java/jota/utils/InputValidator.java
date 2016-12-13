@@ -6,8 +6,8 @@ package jota.utils;
 public class InputValidator {
 
     public static boolean isAddress(String address) {
-        return (address.length() == Constants.addressLengthWithoutChecksum ||
-                address.length() == Constants.addressLengthWithChecksum) && isTrytes(address, address.length());
+        return (address.length() == Constants.ADDRESS_LENGTH_WITHOUT_CHECKSUM ||
+                address.length() == Constants.ADDRESS_LENGTH_WITH_CHECKSUM) && isTrytes(address, address.length());
     }
 
     public static boolean checkAddress(String address) {
