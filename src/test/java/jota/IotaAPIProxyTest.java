@@ -40,6 +40,21 @@ public class IotaAPIProxyTest {
     public void shouldGetNodeInfo() {
         GetNodeInfoResponse nodeInfo = proxy.getNodeInfo();
         assertThat(nodeInfo.getAppVersion(), IsNull.notNullValue());
+        assertThat(nodeInfo.getAppName(), IsNull.notNullValue());
+        //assertThat(nodeInfo.getJreVersion(), IsNull.notNullValue());
+        assertThat(nodeInfo.getJreAvailableProcessors(), IsNull.notNullValue());
+        assertThat(nodeInfo.getJreFreeMemory(), IsNull.notNullValue());
+        assertThat(nodeInfo.getJreMaxMemory(), IsNull.notNullValue());
+        assertThat(nodeInfo.getJreTotalMemory(), IsNull.notNullValue());
+        assertThat(nodeInfo.getLatestMilestone(), IsNull.notNullValue());
+        assertThat(nodeInfo.getLatestMilestoneIndex(), IsNull.notNullValue());
+        assertThat(nodeInfo.getLatestSolidSubtangleMilestone(), IsNull.notNullValue());
+        assertThat(nodeInfo.getLatestSolidSubtangleMilestoneIndex(), IsNull.notNullValue());
+        assertThat(nodeInfo.getNeighbors(), IsNull.notNullValue());
+        assertThat(nodeInfo.getPacketsQueueSize(), IsNull.notNullValue());
+        assertThat(nodeInfo.getTime(), IsNull.notNullValue());
+        assertThat(nodeInfo.getTips(), IsNull.notNullValue());
+        assertThat(nodeInfo.getTransactionsToRequest(), IsNull.notNullValue());
     }
 
     @Test
@@ -70,25 +85,25 @@ public class IotaAPIProxyTest {
     public void shouldFindTransactionsByAddresses() {
         FindTransactionResponse trans = proxy.findTransactionsByAddresses(TEST_ADDRESS_WITH_CHECKSUM);
         System.err.println(gson.toJson(trans));
-        assertThat(trans, IsNull.notNullValue());
+        assertThat(trans.getHashes(), IsNull.notNullValue());
     }
 
     @Test
     public void shouldFindTransactionsByApprovees() {
         FindTransactionResponse trans = proxy.findTransactionsByApprovees(new String[]{TEST_HASH});
-        assertThat(trans, IsNull.notNullValue());
+        assertThat(trans.getHashes(), IsNull.notNullValue());
     }
 
     @Test
     public void shouldFindTransactionsByBundles() {
         FindTransactionResponse trans = proxy.findTransactionsByBundles(TEST_HASH);
-        assertThat(trans, IsNull.notNullValue());
+        assertThat(trans.getHashes(), IsNull.notNullValue());
     }
 
     @Test
     public void shouldFindTransactionsByDigests() {
         FindTransactionResponse trans = proxy.findTransactionsByDigests(TEST_HASH);
-        assertThat(trans, IsNull.notNullValue());
+        assertThat(trans.getHashes(), IsNull.notNullValue());
     }
 
 
@@ -97,27 +112,32 @@ public class IotaAPIProxyTest {
     @Test
     public void shouldGetTrytes() {
         GetTrytesResponse res = proxy.getTrytes(TEST_HASH);
-        assertThat(res, IsNull.notNullValue());
+        assertThat(res.getTrytes(), IsNull.notNullValue());
 
     }
 
     @Test
     public void shouldGetInclusionStates() {
         GetInclusionStateResponse res = proxy.getInclusionStates(new String[]{TEST_ADDRESS_WITH_CHECKSUM}, new String[]{"DNSBRJWNOVUCQPILOQIFDKBFJMVOTGHLIMLLRXOHFTJZGRHJUEDAOWXQRYGDI9KHYFGYDWQJZKX999999"});
-        assertThat(res, IsNull.notNullValue());
+        assertThat(res.getStates(), IsNull.notNullValue());
     }
 
     @Test // very long execution
     public void shouldGetTransactionsToApprove() {
         GetTransactionsToApproveResponse res = proxy.getTransactionsToApprove(27);
-        assertThat(res, IsNull.notNullValue());
+        assertThat(res.getTrunkTransaction(), IsNull.notNullValue());
+        assertThat(res.getBranchTransaction(), IsNull.notNullValue());
+
     }
 
     @Test
     public void shouldGetBalances() {
         GetBalancesResponse res = proxy.getBalances(100, new String[]{TEST_ADDRESS_WITH_CHECKSUM});
         System.err.println(res);
-        assertThat(res, IsNull.notNullValue());
+        assertThat(res.getBalances(), IsNull.notNullValue());
+        assertThat(res.getMilestone(), IsNull.notNullValue());
+        assertThat(res.getMilestoneIndex(), IsNull.notNullValue());
+
     }
 
     @Test
